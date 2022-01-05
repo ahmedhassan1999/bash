@@ -1,0 +1,13 @@
+#!/bin/bash
+function exitDir()
+{
+search=$(find . -type d -name $1 )
+if [ -z "$search"  ]
+then
+search=0
+else 
+search=1
+fi
+return $search
+}
+exitDir $1

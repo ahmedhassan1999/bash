@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function dropDb
+{
+ echo -e "Please Enter The Database Name: \c"
+ read DBname
+  . ./validInput $DBname
+  resultd=$?
+  if [ $resultd == 1 ]
+   then
+   . ./searchExistdir $DBname
+   resultd2=$?
+   if [ $resultd2 == 0 ]
+   then
+   echo "Database Not exist"
+   else
+    rm -r $DBname 2>>./.error.log
+   echo "The Database Called $DBname Has been Dropped Successfully"
+   fi
+  fi
+}

@@ -1,0 +1,29 @@
+#!/bin/bash
+. tableMenu.sh
+function openDb
+{
+  echo -e "Please Enter your Database Name: \c"
+  read DBName
+  . ./validInput $DBName
+  result=$?
+  if [ $result == 1 ]
+   then
+   . ./searchExistdir $DBName
+   result2=$?
+   if [ $result2 == 0 ]
+   then
+   echo "Database $DBName Not Found"
+   startingMenu
+   else
+    cd $DBName 2>>./.error.log
+    tableMenu
+   fi
+  elif [ $result == 2 ]
+  then 
+  echo "You Entered Space"
+  startingMenu
+  else
+   echo "Invalid Inpute"
+   startingMenu
+  fi
+}

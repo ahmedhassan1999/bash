@@ -1,0 +1,29 @@
+function deleteFromTable 
+{
+  echo -e "Please Enter Table Name \c"
+  read tableName
+  . ../searchExitfile $tableName 
+  result2=$?
+	if [ $result2 == 0 ]
+  then
+  echo "Table $tableName Not Exist "
+  tableMenu
+  else
+    awk '{print}' $tableName 2>>./.error.log
+    echo -e "Please enter the column number \c"
+    read cont
+      echo -e "Please Enter The Value \c"
+      read value
+      result=$(awk 'BEGIN{FS=":"}{if ($'$cont'=="'$value'") print $'$cont'}' $tableName 2>>./.error.log)  #return value [int,string]
+      if [ -z "$result" ]
+       then
+       echo "$value Not Found"
+       tableMenu
+      else
+      NR=$(awk 'BEGIN{FS=":"}{if ($'$cont'=="'$value'") print NR}' $tableName 2>>./.error.log)
+      sed -i ''$NR'$d' $tableName 2>>./.error.log
+      echo "Row Deleted Successfully"
+      tableMenu
+      fi
+  fi
+}

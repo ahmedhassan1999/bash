@@ -1,0 +1,20 @@
+function selectCol
+{
+echo -e "Please Enter Table Name: \c"
+read tableName
+if [ -e $tableName ]
+then
+    if [ -s $tableName ]
+    then
+        echo -e "Please Enter Column Number: \c"
+        read colNum
+        awk -F":" '{print $'$colNum'}' $tableName 
+    else
+        echo "The Table is Empty"
+    fi
+else
+    echo "Table $tableName Not Found"
+    
+fi
+tableMenu
+}

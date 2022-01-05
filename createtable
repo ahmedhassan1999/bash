@@ -1,0 +1,34 @@
+#!/bin/bash
+
+function createTable()
+{
+	echo -e "Please Enter The Name of Table \c"
+	read tablename
+	. ../validInput $tablename
+	result1=$?
+	if [ $result1 == 1 ]
+	then
+		. ../searchExitfile $tablename     
+		result2=$?
+		if [ $result2 == 0 ]
+		then
+		meta="Meta"
+		meta="$tablename$meta"
+			touch ./$tablename ./$meta
+			. ../permission ./$tablename
+			. ../permission ./$meta
+			echo "table $tablename is created successfully "
+		else
+		echo "the table name $tablename is exist"
+		fi	
+
+	elif [ $result1 == 2 ]
+	then
+		echo "You Enterd Space"
+	else 
+		echo "invalid input"
+	fi
+	tableMenu
+	return 0
+
+} 

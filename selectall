@@ -1,0 +1,19 @@
+function selectAllCols 
+{
+echo -e "Please Enter Table Name: \c"
+read tableName
+if [ -e $tableName ]
+then
+    if [ -s $tableName ]
+    then
+       
+        awk '{print}' $tableName 2>>./.error.log
+    else
+        echo "The Table is Empty"
+    fi
+else
+    echo "Table $tableName Not Found"
+    
+fi
+tableMenu
+}

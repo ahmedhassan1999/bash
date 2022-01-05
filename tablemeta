@@ -1,0 +1,30 @@
+#!/bin/bash
+function tableMeta()
+{
+	m=Meta
+	Meta="$1$m"
+	echo "enter the number of columns from 1 to 10"
+	read number
+	if [ $number -ge 1 ]  && [ $number -le 10 ] 
+	then 
+	echo "$number" >> $Meta
+	#echo ""  >> ./$1/$Meta
+	for((i=1;i<=$number;i++))
+	do
+	echo "enter the name if column ${i}"
+	read name
+	echo -n "$name" >> $Meta
+	echo -n ":">> $Meta
+	echo "enter the Datatype of column ${i}"
+	read type
+	echo -n "$type" >> $Meta
+	echo ""  >> $Meta
+	done
+	echo "enter the name of primarykey"
+	read key
+	echo  "$key" >> $Meta
+	else
+	       echo "invalid input"	
+	fi
+
+}

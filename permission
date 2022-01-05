@@ -1,0 +1,10 @@
+#!/bin/bash
+
+function changemod()
+{
+
+chmod 777 $1
+return 0
+
+}
+changemod $1

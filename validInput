@@ -1,0 +1,25 @@
+#!/bin/bash
+string=$1
+
+function validWord()
+{
+
+flag=1
+if [[  ${#string} == 0  ]]; then
+
+	flag=2
+	return $flag
+fi
+for ((i=0;i<${#string};i++));
+do
+  ch="${string:$i:1}"
+if [[ "$ch" =~ [^a-zA-Z] ]] && [[ "$ch" != [1-9]   ]]  ;
+then
+        flag=3
+        break
+else
+continue
+fi ;done
+return $flag
+}
+validWord $string

@@ -1,0 +1,29 @@
+#!/bin/bash
+function createdb()
+{
+echo -e "Please Enter Your Database Name: \c"
+read name
+. ./validInput $name
+res1=$?
+if [ $res1 == 1 ]
+then
+. ./searchExistdir $name
+res2=$?
+if [ $res2 == 0 ]
+then
+mkdir $name
+echo "$name Created Successfully"
+elif [ $res2 == 1 ]
+then 
+echo "$name Already exist"
+fi
+elif [ $res1 == 2 ]
+then	
+echo "You Entered space this is invalid input"
+else
+echo "invalid input"
+fi
+return $res1
+}
+createdb 
+startingMenu

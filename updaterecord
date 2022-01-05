@@ -1,0 +1,98 @@
+#!/bin/bash
+
+function updateRecorde()
+{
+       while true 
+			do
+					echo -e "Please Enter The Name of Table \c"
+					read tableName
+					valid $tableName
+					res=$?
+					if [ $res == 2 ]
+					then 
+					break
+					fi
+					echo "incorrect input you enter string name"
+			done
+
+        . ../searchExitfile $tableName
+        result=$?
+if [ $result == 0 ]
+then
+        echo " $tableName not fount"
+else 
+        Meta="Meta"
+	    tableNameMeta="$tableName$Meta"
+        read -r firstline< $tableNameMeta
+        firstline=$(($firstline+1))
+             while true 
+			do
+					echo "enter the primary key of record to update it"
+					read number
+					valid $number
+					res=$?
+					if [ $res == 1 ]
+					then 
+					break
+					fi
+					echo "incorrect input you must enter number"
+			done
+                
+        
+          record=` awk  -F:  '$1 == '$number'  '  $tableName `
+
+    if [ -z "$record" ]
+    then
+        echo "not found"
+    else
+        for((i=2;i<=$firstline;i++))
+        do
+            type=` awk -F: 'NR=='$i' {print  $2 }' $tableNameMeta `
+			while true
+			do
+				 awk -F: 'NR=='$i' {print "enter the value to update " $1 " which is " $2}' $tableNameMeta
+				read value
+				valid $value
+				res=$?
+				if [  $type == "int" ]
+				then
+					if [ $res == 1 ]
+					then
+                         oldData=` awk -F: '$1=='$number' {print  $'$i' }' $tableName `
+                        row=` awk -F: '$1=='$number' {print NR }' $tableName `
+                         sed -i ''$row's/'$oldData'/'$value'/g' $tableName
+                            echo "the record update succsefully"
+						break;
+					else 
+						echo "the type must be integer"
+					fi
+				fi
+
+				if [  $type == "string" ]
+				then
+					if [ $res == 2 ]
+					then
+						 oldData=` awk -F: '$1=='$number' {print  $'$i' }' $tableName `
+                         row=` awk -F: '$1=='$number' {print NR }' $tableName `
+                         sed -i ''$row's/'$oldData'/'$value'/g' $tableName
+                            echo "the record update succsefully"
+						break;
+					else 
+						echo "the type must be string"
+					fi
+				fi
+            done    		
+
+
+
+
+		done
+
+           
+        
+         
+    fi        
+        
+
+fi   
+}

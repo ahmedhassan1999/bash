@@ -1,0 +1,16 @@
+#!/bin/bash
+function exitFile()
+{
+search=$(find -type f -name $1)
+if [ -z "$search"  ]
+then
+search=0
+else
+search=1
+fi
+return $search
+}
+exitFile $1 
+       
+
+
